@@ -10,11 +10,19 @@
         - fetch API
         - Tabela zebrada e responsiva
         - Cards
-## Tecnologias
-- Node.JS
-- VsCode
-- XAMPP
-- Insomnia
+
+|Stack|Tecnologias|
+|-|-|
+|Front-End|Servidor Live Server VsCode|
+|Front-End|Modelo HTML|
+|Front-End|Visão CSS|
+|Front-End|Controle JavaScript|
+|Back-End|Framework Node.JS|
+|Back-End|IDE VsCode|
+|Back-End|ORM Prisma|
+|Back-End|Framework XAMPP|
+|Back-End|SGBD MySQL|
+
 ## Passo a passo de como testar
 ### Back-End
 - 1 Clone este repositório
