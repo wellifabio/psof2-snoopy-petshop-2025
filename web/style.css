@@ -205,6 +205,10 @@ button:hover {
                     box-shadow: 0 0 10px var(--t1);
                 }
             }
+
+            & button {
+                border-radius: 25px;
+            }
         }
     }
 }
