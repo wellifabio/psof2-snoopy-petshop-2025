@@ -69,6 +69,66 @@ function preencherPedidos() {
     });
 }
 
+//Preencher a tabela do Modal de listarClientes com os clientes obtidos da API
+function preencherClientes() {
+    const tbody = document.querySelector("#listarClientes tbody");
+    tbody.innerHTML = "";
+    clientes.forEach(cliente => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td data-label="Id">${cliente.id}</td>
+            <td data-label="CPF">${cliente.cpf}</td>
+            <td data-label="Nome">${cliente.nome}</td>
+            <td data-label="Telefones">
+                ${cliente.telefones.map(telefone => `${telefone.numero} (${telefone.tipo})`).join(", ")}
+                <button onclick="novoInput(this, ${cliente.id})">+</button>
+            </td>
+            <td data-label="Ações"><button>*</button><button>-</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+//Imput para adicionar telefone ao cliente
+function novoInput(elemento, clienteId) {
+    const td = elemento.parentNode;
+    const form = document.createElement("form");
+    form.innerHTML = `
+        <input type="text" name="telefone" placeholder="Telefone" required>
+        <select name="tipo" required>
+            <option value="celular">Celular</option>    
+            <option value="residencial">Residencial</option>
+            <option value="comercial">Comercial</option>
+        </select>
+        <button type="submit">Salvar</button>
+    `;
+    td.insertBefore(form, elemento);
+    elemento.remove();
+    form.addEventListener("submit", e => {
+        e.preventDefault();
+        const dados = {
+            clienteId: Number(clienteId),
+            numero: form.telefone.value,
+            tipo: form.tipo.value
+        };
+        fetch(uri + "/telefones", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados)
+        }).then(resp => resp.status)
+            .then(status => {
+                if (status == 201) {
+                    alert("Telefone adicionado com sucesso!");
+                } else {
+                    alert("Erro ao adicionar telefone!");
+                }
+                window.location.reload();
+            });
+    });
+}
+
 //Enviar dados do cadastro de clientes para a API
 const cadCli = document.querySelector("#novoCli form");
 cadCli.addEventListener("submit", e => {
